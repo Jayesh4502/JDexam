@@ -2,12 +2,13 @@ pipeline {
     agent any
  
     environment {
-        APP_DIR = "healthcare-app"
-        APP_PORT = "3000"
+        IMAGE_NAME = "healthcare-app"
+        CONTAINER_NAME = "healthcare-container"
+        APP_PORT = "3000"  // Host port to expose
     }
  
     stages {
-        stage('Clone Repository') {
+        stage('Clone Repo') {
             steps {
                 script {
                     echo "📥 Cloning the GitHub Repository..."
@@ -16,27 +17,32 @@ pipeline {
             }
         }
  
-        stage('Install http-server') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    echo "⚙️ Installing http-server (if not already present)..."
-                    sh '''
-                        if ! command -v http-server > /dev/null; then
-                            npm install -g http-server
-                        fi
-                    '''
+                    echo "🐳 Building Docker Image..."
+                    sh "docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
  
-        stage('Start Static Server') {
+        stage('Stop Old Container') {
             steps {
                 script {
-                    echo "🚀 Starting static site with http-server..."
-                    sh '''
-                        cd ${APP_DIR}
-                        nohup http-server -p ${APP_PORT} &
-                    '''
+                    echo "🛑 Stopping and Removing Old Container..."
+                    sh """
+                        docker stop ${CONTAINER_NAME} || true
+                        docker rm ${CONTAINER_NAME} || true
+                    """
+                }
+            }
+        }
+ 
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    echo "🚀 Running Docker Container..."
+                    sh "docker run -d -p ${APP_PORT}:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}"
                 }
             }
         }
@@ -44,10 +50,10 @@ pipeline {
  
     post {
         success {
-            echo "✅ Static website hosted successfully at: http://<your-ec2-ip>:${APP_PORT}"
+            echo "✅ Deployment successful! Visit: http://<your-ec2-ip>:${APP_PORT}"
         }
         failure {
-            echo "❌ Deployment failed. Please check Jenkins logs."
+            echo "❌ Deployment failed. Check logs for more details."
         }
     }
 }
