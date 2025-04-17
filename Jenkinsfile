@@ -2,7 +2,6 @@ pipeline {
     agent any
  
     environment {
-        APP_DIR = "healthcare-app"
         APP_PORT = "3000"
     }
  
@@ -21,7 +20,6 @@ pipeline {
                 script {
                     echo "📦 Installing Application Dependencies..."
                     sh '''
-                        cd ${APP_DIR}
                         if [ -f package.json ]; then
                             npm install
                         else
@@ -37,7 +35,6 @@ pipeline {
                 script {
                     echo "🚀 Starting the Application..."
                     sh '''
-                        cd ${APP_DIR}
                         nohup npm start --port=${APP_PORT} &
                     '''
                 }
