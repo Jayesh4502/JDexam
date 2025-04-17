@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Healthcare Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    header, footer {
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #007bff;
+    }
+    .card {
+      background: #f4f4f4;
+      margin: 15px 0;
+      padding: 15px;
+      border-left: 5px solid #007bff;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px;
+      border: 1px solid #ccc;
+    }
+    form button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Healthcare Services</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container" id="home">
+    <h2>Welcome</h2>
+    <p>We are dedicated to providing the best healthcare experience with a focus on patient-centered care and innovative medical services.</p>
+  </div>
+
+  <div class="container" id="about">
+    <h2>About Us</h2>
+    <p>Our hospital has been serving the community with exceptional care and advanced medical technologies for over 20 years.</p>
+  </div>
+
+  <div class="container" id="services">
+    <h2>Our Services</h2>
+    <div class="card">✅ General Checkups</div>
+    <div class="card">💉 Immunizations</div>
+    <div class="card">🧪 Laboratory Tests</div>
+    <div class="card">🚑 Emergency Services</div>
+  </div>
+
+  <div class="container" id="contact">
+    <h2>Contact Us</h2>
+    <form onsubmit="alert('Message Sent! Thank you.'); return false;">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required />
+      <label for="email">Email:</label>
+      <input type="email" id="email" required />
+      <label for="message">Message:</label>
+      <textarea id="message" rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Healthcare Services</p>
+  </footer>
+
+</body>
+</html>
