@@ -2,6 +2,7 @@ pipeline {
     agent any
  
     environment {
+        APP_DIR = "healthcare-app"
         APP_PORT = "3000"
     }
  
@@ -10,32 +11,31 @@ pipeline {
             steps {
                 script {
                     echo "📥 Cloning the GitHub Repository..."
-                    git branch: 'main', url: 'https://github.com/Jayesh4502/JDexam.git'
+                    git branch: 'main', url: 'https://github.com/ramagurijala882/Ramafinalsd.git'
                 }
             }
         }
  
-        stage('Install Dependencies') {
+        stage('Install http-server') {
             steps {
                 script {
-                    echo "📦 Installing Application Dependencies..."
+                    echo "⚙️ Installing http-server (if not already present)..."
                     sh '''
-                        if [ -f package.json ]; then
-                            npm install
-                        else
-                            echo "⚠️ No package.json found. Skipping npm install."
+                        if ! command -v http-server > /dev/null; then
+                            npm install -g http-server
                         fi
                     '''
                 }
             }
         }
  
-        stage('Start Application') {
+        stage('Start Static Server') {
             steps {
                 script {
-                    echo "🚀 Starting the Application..."
+                    echo "🚀 Starting static site with http-server..."
                     sh '''
-                        nohup npm start --port=${APP_PORT} &
+                        cd ${APP_DIR}
+                        nohup http-server -p ${APP_PORT} &
                     '''
                 }
             }
@@ -44,10 +44,10 @@ pipeline {
  
     post {
         success {
-            echo "✅ Application deployed successfully at: http://<your-ec2-ip>:${APP_PORT}"
+            echo "✅ Static website hosted successfully at: http://<your-ec2-ip>:${APP_PORT}"
         }
         failure {
-            echo "❌ Deployment failed. Please check the Jenkins logs for details."
+            echo "❌ Deployment failed. Please check Jenkins logs."
         }
     }
 }
