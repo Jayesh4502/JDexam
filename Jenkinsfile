@@ -57,3 +57,10 @@ pipeline {
         }
     }
 }
+
+environment {
+    IMAGE_NAME = "healthcare-app"
+    CONTAINER_NAME = "healthcare-container"
+    APP_PORT = "80"  // Host port
+}
+
