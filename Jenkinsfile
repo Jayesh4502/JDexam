@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     echo "📥 Cloning the GitHub Repository..."
-                    git branch: 'main', url: 'https://github.com/ramagurijala882/Ramafinalsd.git'
+                    git branch: 'main', url: 'https://github.com/Jayesh4502/JDexam.git'
                 }
             }
         }
